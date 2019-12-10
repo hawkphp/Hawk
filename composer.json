@@ -1,0 +1,48 @@
+{
+  "name": "hawk/micro-api",
+  "description": "Micro api is a framework for building REST application",
+  "license": "MIT",
+  "keywords": [
+    "framework",
+    "hawk",
+    "api",
+    "rest",
+    "micro",
+    "web",
+    "app",
+    "application"
+  ],
+  "homepage": "https://github.com/hawkphp",
+  "authors": [
+    {
+      "name": "Ruslan Baimurzaev",
+      "email": "baimurzaev@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "psr7-http-message": "^1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Hawk\\Micro\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Hawk\\Tests\\Minify\\": "tests"
+    }
+  },
+  "scripts": {
+    "deploy": [
+      "@minify"
+    ],
+    "test": [
+      "@phpunit"
+    ],
+    "phpunit": "phpunit"
+  }
+}
