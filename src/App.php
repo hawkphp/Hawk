@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Hawk\Micro;
+namespace Hawk;
 
 /**
  * Class App
- * @package Hawk\Micro
+ * @package Hawk
  */
 class App
 {

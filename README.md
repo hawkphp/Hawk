@@ -4,7 +4,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Version](https://img.shields.io/github/release/hawkphp/micro-api.svg?style=flat-square)](https://github.com/hawkphp/minify/releases)
 
-Micro api is a framework for building REST application
+Hawk - micro framework for building REST applications
 
 ## Quickstart
 
@@ -13,7 +13,7 @@ Installation:
 Add to your composer:
 ```
     "require": {
-        "hawkphp/micro-api": "^1"
+        "hawkphp/Hawk": "^1"
     }
 ```
 
@@ -22,7 +22,7 @@ Add to your composer:
 You can execute the test suite. You'll need to clone the repository and install the dependencies.
 
 ```bash
-$ git clone https://github.com/hawkphp/micro-api
+$ git clone https://github.com/hawkphp/Hawk
 $ composer install
 $ composer test
 ```
