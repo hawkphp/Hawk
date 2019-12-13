@@ -2,11 +2,18 @@
 
 namespace Hawk;
 
+use League\Route\Router;
+
 /**
  * Class App
  * @package Hawk
  */
-class App
+class App extends Router
 {
+    /**
+     * @var string
+     */
+    public const VERSION = '0.0.1';
+
 
 }
