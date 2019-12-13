@@ -23,6 +23,10 @@
   "require": {
     "php": ">=7.2",
     "hawkphp/psr7": "^1",
+<<<<<<< HEAD
+=======
+    "psr/http-message": "^1.0",
+>>>>>>> d47d6d8c03b2d8a4c603952efd56026df99e410c
     "league/route": "^4.3"
   },
   "require-dev": {
