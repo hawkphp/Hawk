@@ -1,10 +1,10 @@
 
-# Micro API
+# Hawk Framework
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Version](https://img.shields.io/github/release/hawkphp/micro-api.svg?style=flat-square)](https://github.com/hawkphp/minify/releases)
 
-Hawk - micro framework for building REST applications
+Micro framework for building REST applications
 
 ## Quickstart
 
