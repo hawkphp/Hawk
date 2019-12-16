@@ -7,10 +7,10 @@ use Hawk\Interfaces\EmitterInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class SapiEmitter
+ * Class ResponseEmitter
  * @package Hawk
  */
-class SapiEmitter implements EmitterInterface
+class ResponseEmitter implements EmitterInterface
 {
     /**
      * @param ResponseInterface $response
