@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace Hawk\Interfaces;
+
 use Psr\Http\Message\ResponseInterface;
 
 /**
