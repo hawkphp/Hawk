@@ -2,8 +2,11 @@
 
 namespace Hawk;
 
-use League\Route\RouteCollectionInterface;
+use Hawk\Psr7\Factory\ServerRequestFactory;
+use League\Route\Route;
+use League\Route\RouteGroup;
 use League\Route\Router;
+use League\Route\RouteCollectionInterface;
 use League\Route\Strategy\StrategyInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -86,7 +89,7 @@ class App
     /**
      * @param string $path
      * @param $handler
-     * @return \League\Route\Route|null
+     * @return Route|null
      */
     public function get(string $path, $handler)
     {
@@ -96,57 +99,57 @@ class App
     /**
      * @param string $path
      * @param $handler
-     * @return \League\Route\Route|null
+     * @return Route|null
      */
     public function post(string $path, $handler)
     {
-        return $this->map(['POST'], $path, $handler);
+        return $this->map('POST', $path, $handler);
     }
 
     /**
      * @param string $path
      * @param $handler
-     * @return \League\Route\Route|null
+     * @return Route|null
      */
     public function put(string $path, $handler)
     {
-        return $this->map(['PUT'], $path, $handler);
+        return $this->map('PUT', $path, $handler);
     }
 
     /**
      * @param string $path
      * @param $handler
-     * @return \League\Route\Route|null
+     * @return Route|null
      */
     public function path(string $path, $handler)
     {
-        return $this->map(['PATH'], $path, $handler);
+        return $this->map('PATH', $path, $handler);
     }
 
     /**
      * @param string $path
      * @param $handler
-     * @return \League\Route\Route|null
+     * @return Route|null
      */
     public function delete(string $path, $handler)
     {
-        return $this->map(['DELETE'], $path, $handler);
+        return $this->map('DELETE', $path, $handler);
     }
 
     /**
      * @param string $path
      * @param $handler
-     * @return \League\Route\Route|null
+     * @return Route|null
      */
     public function options(string $path, $handler)
     {
-        return $this->map(['OPTIONS'], $path, $handler);
+        return $this->map('OPTIONS', $path, $handler);
     }
 
     /**
      * @param string $prefix
      * @param callable $group
-     * @return \League\Route\RouteGroup
+     * @return RouteGroup
      */
     public function group(string $prefix, callable $group)
     {
@@ -156,7 +159,7 @@ class App
     /**
      * @param string $path
      * @param $handler
-     * @return \League\Route\Route|null
+     * @return Route|null
      */
     public function any(string $path, $handler)
     {
@@ -164,13 +167,23 @@ class App
     }
 
     /**
-     * @param array $methods
+     * @param array|string $methods
      * @param string $path
      * @param $handler
-     * @return \League\Route\Route|null
+     * @return Route|null
      */
-    public function map(array $methods, string $path, $handler)
+    public function map($methods, string $path, $handler)
     {
+        if (!is_string($methods) || !is_array($methods)) {
+            throw new \InvalidArgumentException("The parameter method must have a string or array type");
+        }
+
+        $methods = (is_string($methods)) ?? [$methods];
+
+        if (is_string($methods)) {
+            $methods = [$methods];
+        }
+
         $route = null;
 
         foreach ($methods as $method) {
@@ -178,5 +191,19 @@ class App
         }
 
         return $route;
+    }
+
+    /**
+     *
+     */
+    public function emit()
+    {
+        $request = ServerRequestFactory::fromGlobals(
+            $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
+        );
+
+        $response = $this->router->dispatch($request);
+
+        (new ResponseEmitter())->emit($response);
     }
 }
