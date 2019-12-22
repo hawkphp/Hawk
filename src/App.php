@@ -193,9 +193,6 @@ class App
         return $route;
     }
 
-    /**
-     *
-     */
     public function emit()
     {
         $request = ServerRequestFactory::fromGlobals(
@@ -206,4 +203,5 @@ class App
 
         (new ResponseEmitter())->emit($response);
     }
+
 }
