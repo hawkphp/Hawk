@@ -7,6 +7,7 @@ use League\Route\Route;
 use League\Route\RouteGroup;
 use League\Route\Router;
 use League\Route\RouteCollectionInterface;
+use League\Route\Strategy\JsonStrategy;
 use League\Route\Strategy\StrategyInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -193,6 +194,9 @@ class App
         return $route;
     }
 
+    /**
+     *
+     */
     public function emit()
     {
         $request = ServerRequestFactory::fromGlobals(
@@ -204,4 +208,12 @@ class App
         (new ResponseEmitter())->emit($response);
     }
 
+    /**
+     *
+     */
+    public function json()
+    {
+        $this->setStrategy(new JsonStrategy($this->response));
+        $this->emit();
+    }
 }
