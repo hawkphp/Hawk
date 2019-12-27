@@ -11,6 +11,7 @@ use League\Route\Strategy\JsonStrategy;
 use League\Route\Strategy\StrategyInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
 /**
  * Class App
@@ -158,38 +159,18 @@ class App
     }
 
     /**
+     * @param array|string $method
      * @param string $path
-     * @param $handler
+     * @param callable|string $handler
      * @return Route|null
      */
-    public function any(string $path, $handler)
+    public function map($method, string $path, $handler)
     {
-        return $this->map(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], $path, $handler);
-    }
-
-    /**
-     * @param array|string $methods
-     * @param string $path
-     * @param $handler
-     * @return Route|null
-     */
-    public function map($methods, string $path, $handler)
-    {
-        if (!is_string($methods) || !is_array($methods)) {
-            throw new \InvalidArgumentException("The parameter method must have a string or array type");
+        if (!is_string($method)) {
+            throw new \InvalidArgumentException("The parameter method must have a string type");
         }
 
-        $methods = (is_string($methods)) ?? [$methods];
-
-        if (is_string($methods)) {
-            $methods = [$methods];
-        }
-
-        $route = null;
-
-        foreach ($methods as $method) {
-            $route = $this->router->map($method, $path, $handler);
-        }
+        $route = $this->router->map($method, $path, $handler);
 
         return $route;
     }
@@ -216,4 +197,24 @@ class App
         $this->setStrategy(new JsonStrategy($this->response));
         $this->emit();
     }
+
+    /**
+     * @param string $alias
+     * @param string $regex
+     * @return Router
+     */
+    public function addPattern(string $alias, string $regex)
+    {
+        return $this->router->addPatternMatcher($alias, $regex);
+    }
+
+    /**
+     * @param MiddlewareInterface $middleware
+     * @return \League\Route\Middleware\MiddlewareAwareInterface
+     */
+    public function middleware(MiddlewareInterface $middleware)
+    {
+        return $this->router->middleware($middleware);
+    }
+
 }
